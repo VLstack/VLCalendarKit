@@ -1,32 +1,32 @@
 import Foundation
 import VLDateKit
+import SwiftUI
 
 public extension Date
 {
  var daysInMonthForCalendarDisplay: [ Date ]
  {
   var days: [ Date ] = []
+
   // Current month days
   let _startOfMonth: Date = self.startOfMonth
   let _numberOfDaysInMonth: Int = self.numberOfDaysInMonth
   for dayOffset in 0..<_numberOfDaysInMonth
   {
-   let newDay: Date = Calendar.current.date(byAdding: .day, value: dayOffset, to: _startOfMonth) ?? .distantFuture
-   days.append(newDay)
+   days.append(_startOfMonth.adding(.day, value: dayOffset))
   }
   
   // Previous month days
   let _startOfPreviousMonth: Date = self.startOfPreviousMonth
   let _numberOfDaysInPreviousMonth: Int = _startOfPreviousMonth.numberOfDaysInMonth
-  
   for dayOffset in 0..<_numberOfDaysInPreviousMonth
   {
-   let newDay: Date = Calendar.current.date(byAdding: .day, value: dayOffset, to: _startOfPreviousMonth) ?? .distantPast
-   days.append(newDay)
+   days.append(_startOfPreviousMonth.adding(.day, value: dayOffset))
   }
-  
-  let _sundayBeforeStartOfMonth: Date = self.sundayBeforeStartOfMonth
+
+  let _firstWeekdayBeforeStartOfMonth: Date = self.firstWeekdayBeforeStartOfMonth
   let _endOfMonth: Date = self.endOfMonth
-  return days.filter { $0 >= _sundayBeforeStartOfMonth && $0 <= _endOfMonth }.sorted(by: <)
+
+  return days.filter { $0 >= _firstWeekdayBeforeStartOfMonth && $0 <= _endOfMonth }.sorted(by: <)
  }
 }

@@ -100,8 +100,6 @@ public struct VLCalendarView<HeaderDay: View, GridDay: View>: View
  {
   VStack(spacing: 0)
   {
-//   headerView.onSizeChange { headerSize = $0 }
-//   gridView.onSizeChange { gridSize = $0 }
    headerView.onSizeChange(size: $headerSize)
    gridView.onSizeChange(size: $gridSize)
   }
@@ -192,5 +190,4 @@ extension VLCalendarView
   .padding()
  }
 }
-
 #endif
